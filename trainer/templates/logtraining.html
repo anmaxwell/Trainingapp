@@ -3,14 +3,14 @@
 
 <div class="border border primary w-50 p-3" style="background-color: rgb(211, 240, 220); margin: auto; margin-top: 120px">
     <form>
-        <label class="h3" for="title">Sign Up</label>
+        <label class="h3" for="title">Log Training</label>
         <div class="form-group">           
-            <label for="username">Username</label>
-            <input type="username" class="form-control" id="username" aria-describedby="usernameHelp">    
+            <label for="provider">Training Provider</label>
+            <input type="provider" class="form-control" id="provider" aria-describedby="providerHelp">    
         </div>
         <div class="form-group">           
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">    
+            <label for="coursetitle">Course Title</label>
+            <input type="coursetitle" class="form-control" id="coursetitle" aria-describedby="coursetitleHelp">    
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
@@ -20,12 +20,12 @@
             <label for="exampleConfirmPassword1">Confirm Password</label>
             <input type="confirmpassword" class="form-control" id="exampleConfirmPassword1">
         </div>
+        <div class="form-group">           
+            <label for="review">Add Review</label>
+            <input type="review" class="form-control" id="review" aria-describedby="reviewHelp">    
+        </div>
 
-
-        <button type="submit" class="btn btn-success">Sign Up</button>
-        <small id="signup" class="form-text text-muted">Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Login Now</a></small>
-
-
+        <button type="submit" class="btn btn-success">Submit</button>
 
     </form>
 </div>

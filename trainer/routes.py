@@ -1,18 +1,10 @@
 from trainer import app
-from trainer.forms import SignUpForm, LoginForm
+from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining
 from flask import render_template, url_for
 
 @app.route('/')
 def index():
     return render_template('home.html')
-    
-@app.route("/signup", methods=['GET', 'POST'])
-def signup():
-    form = SignUpForm()
-    if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('home'))
-    return render_template('signup.html', title='SignUp', form=form)
 
 @app.route('/login')
 def login():
@@ -23,3 +15,18 @@ def login():
 def signup():
     form = SignUpForm()
     return render_template('signup.html', form=form)
+
+@app.route('/profile')
+def profile():
+    form = Profile()
+    return render_template('profile.html', form=form)
+
+@app.route('/editprofile')
+def editprofile():
+    form = Profile()
+    return render_template('profile.html', form=form)
+
+@app.route('/logtraining')
+def logtraining():
+    form = LogTraining()
+    return render_template('logtraining.html', form=form)
