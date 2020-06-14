@@ -1,14 +1,16 @@
   
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+from trainer.models import User, Training
 
 
 class SignUpForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
-                        validators=[DataRequired(), Email(), Length(max=120)])
+                        validators=[DataRequired(), Email(), Length(min=2, max=120)])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
@@ -42,8 +44,11 @@ class Profile(FlaskForm):
 
 
 class LogTraining(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember Me')
+    provider = StringField('Provider',
+                           validators=[DataRequired(), Length(max=20)])
+    title = StringField('Title',
+                           validators=[DataRequired(), Length(min=2, max=120)])
+    date_taken = DateField('Date Entered', format='%Y-%m-%d')
+    rating = SelectField(u'Rating', choices=[], coerce=int)
+    review = TextAreaField('Review')
     submit = SubmitField('Login')
