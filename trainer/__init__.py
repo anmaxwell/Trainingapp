@@ -3,7 +3,6 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
 
 #adding security to prevent XS forgery attacks etc.
@@ -15,5 +14,9 @@ bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///site.db'
 db = SQLAlchemy(app)
 
+#test userlist
+userlist = ['ania@ania.com', 'test@test.com']
+
 #to prevent getting stuck in circular imports create this last
 from trainer import routes, models
+
