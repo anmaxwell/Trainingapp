@@ -5,72 +5,80 @@
     <form>
         <label class="h3" for="title">Profile</label>
         <div class="form-group">           
-            <label for="username">Username</label>
-            <input type="username" class="form-control" id="username" aria-describedby="usernameHelp">    
+            <label for="username">Username</label>   
+            {{ form.username(class="form-control") }}
         </div>
-        <div class="form-group">           
+
+        <div class="form-group">
             <label for="role">Role</label>
-            <input type="role" class="form-control" id="role" aria-describedby="roleHelp">    
+            {% if role %}
+                {{ form.role(class="form-control") }}
+            {% else %}
+                <select class="form-control" id="role">   
+                    <option>Business Analyst</option>
+                    <option>Test Engineer</option>
+                    <option>Developer</option>
+                    <option>Architect</option>
+                    <option>Product Owner</option>
+                    <option>Scrum Master</option>
+                </select>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="level">Level</label>
+            {% if level %}
+                {{ form.level(class="form-control") }}
+            {% else %}
+            <select class="form-control" id="level">
+                <option>Apprentice</option>
+                <option>Graduate</option>
+                <option>Associate</option>
+                <option>Mid</option>
+                <option>Senior</option>
+                <option>Principal</option>
+              </select>
+            {% endif %}
         </div>
 
         <label class="h3 pb-2" for="title">Interests</label>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Testing</label>
+                        </div>
+                    <select multiple class="form-control" id="exampleFormControlSelect2">
+                      <option selected>Choose...</option>
+                      <option value="1">Fundamentals</option>
+                      <option value="2">Performance</option>
+                      <option value="3">Security</option>
+                      <option value="4">Automation</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Languages</label>
+                        </div>
+                    <select multiple class="form-control" id="exampleFormControlSelect2">
+                      <option selected>Choose...</option>
+                      <option value="1">C++</option>
+                      <option value="2">C#</option>
+                      <option value="3">Node</option>
+                      <option value="4">Ruby</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+          </div>
      
-        <div class="form-group"> 
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox1</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox2</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox3</label>
-        </div>
-        </div>
-        <div class="form-group"> 
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox4</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox5</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox6</label>
-        </div>
-        </div>
-        <div class="form-group"> 
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox7</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox8</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbo9</label>
-        </div>
-        </div>
-        <div class="form-group"> 
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox10</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox11</label>
-        </div>
-        <div class="form-check form-check-inline pr-4">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1">Checkbox12</label>
-        </div>
-        </div>
+
+          
+
 
   
         <button type="submit" class="btn btn-success">Submit</button>

@@ -1,4 +1,4 @@
-from trainer import app, db, userlist
+from trainer import app, db, userlist, people
 from trainer.models import User, Training
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining
 from flask import render_template, url_for, flash, redirect, request, session
@@ -20,8 +20,10 @@ def login():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            if form.email.data in userlist:
+            if form.email.data in people:
                 session['name'] = form.email.data
+                session['role'] = people[session['name']]['role']
+                session['level'] = people[session['name']]['level']
                 flash(f"Login successful for {session['name']}!", 'success')
                 return redirect(url_for('history'))
             else:
@@ -50,7 +52,11 @@ def signup():
 @app.route('/profile')
 def profile():
     form = Profile()
-    return render_template('profile.html', title='Profile', form=form)
+    if request.method == 'GET':
+        form.username.data = session['name']
+        form.role.data = session['role']
+        form.level.data = session['level']
+    return render_template('profile.html', title='Profile', form=form, role=session['role'], level=session['level'])
 
 @app.route('/logtraining')
 def logtraining():
