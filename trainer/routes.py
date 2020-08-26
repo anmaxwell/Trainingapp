@@ -38,12 +38,14 @@ def signup():
     if request.method == 'POST':
         if form.validate_on_submit():
             session['name'] = form.email.data
-            if form.email.data in userlist:
+            session['role'] = form.role.data
+            session['level'] = form.level.data
+            if form.email.data in people:
                 flash(f"Account already exists for {session['name']}!", 'success')
                 return redirect(url_for('history'))
             else:
-                username = session['name']
-                userlist.append(username)
+                newuser = {session['name']: {'role': session['role'], 'level': session['level']}}
+                people.update(newuser)
                 flash(f"Account created for {session['name']}!", 'success')
                 return redirect(url_for('profile'))
         flash(f"Danger for {session['name']}!", 'danger')

@@ -30,7 +30,21 @@
                     {% endfor %}
                 </div>
             {% else %}
-                {{ form.role(class="form-control form-control-lg") }}
+                {{ form.role(class="form-control") }}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.level.label(class="form-control-label") }}
+            {% if form.level.errors %}
+                {{ form.level(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.level.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.level(class="form-control") }}
             {% endif %}
         </div>
  
