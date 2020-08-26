@@ -21,6 +21,7 @@ def login():
     if request.method == 'POST':
         if form.validate_on_submit():
             if form.email.data in people:
+                session['logged_in'] = True
                 session['name'] = form.email.data
                 session['role'] = people[session['name']]['role']
                 session['level'] = people[session['name']]['level']
@@ -37,6 +38,7 @@ def signup():
     form = SignUpForm()
     if request.method == 'POST':
         if form.validate_on_submit():
+            session['logged_in'] = True
             session['name'] = form.email.data
             session['role'] = form.role.data
             session['level'] = form.level.data
@@ -55,9 +57,12 @@ def signup():
 def profile():
     form = Profile()
     if request.method == 'GET':
-        form.username.data = session['name']
-        form.role.data = session['role']
-        form.level.data = session['level']
+        if session.get('logged_in') == True:
+            form.username.data = session['name']
+            form.role.data = session['role']
+            form.level.data = session['level']
+        else:
+            return redirect(url_for('login'))
     return render_template('profile.html', title='Profile', form=form, role=session['role'], level=session['level'])
 
 @app.route('/logtraining')
@@ -69,4 +74,5 @@ def logtraining():
 def logout():
     # remove the username from the session if it's there
     session.pop('name', None)
+    session['logged_in'] = False
     return redirect(url_for('index'))
