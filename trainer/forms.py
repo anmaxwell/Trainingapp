@@ -23,10 +23,10 @@ class LoginForm(FlaskForm):
 class Profile(FlaskForm):
     username = StringField('Username',
                             validators=[DataRequired(), Length(min=2, max=20)])
-    role = StringField('Role',
-                            validators=[DataRequired(), Length(min=2, max=20)])
-    level = StringField('Level',
-                            validators=[DataRequired(), Length(min=2, max=20)])
+    role = SelectField(u'Role', choices=[(1,"Business Analyst"),(2,"Test Engineer"),(3,"Developer")
+                    ,(4,"Architect"),(5,"Product Owner"),(6,"Scrum Master")], coerce=int)
+    level = SelectField(u'Level', choices=[(1,"Apprentice"),(2,"Graduate"),(3,"Associate")
+                    ,(4,"Mid"),(5,"Senior"),(6,"Principal")], coerce=int)
     submit = SubmitField('Login')
 
 

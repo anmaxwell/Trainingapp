@@ -17,9 +17,9 @@ db = SQLAlchemy(app)
 #test userlist
 userlist = ['ania@ania.com', 'test@test.com']
 
-people = {'ania@ania.com': {'role': 'Architect', 'level': 'mid'},
-          'test@test.com': {'role': 'Product Owner', 'level': 'senior'},
-          'aniamaxwell@yahoo.com': {'role': '', 'level': ''}}
+people = {'ania@ania.com': {'role': 'Architect', 'level': 'Mid'},
+          'test@test.com': {'role': 'Product Owner', 'level': 'Senior'},
+          'aniamaxwell@yahoo.com': {'role': 'Developer', 'level': 'Associate'}}
 
 
 #to prevent getting stuck in circular imports create this last
