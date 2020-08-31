@@ -5,6 +5,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     training = db.relationship('Training', backref='user', lazy=True)
+    role = db.relationship('Role', backref='role', lazy=True)
 
     def __repr__(self):
         return f"User('{self.email}')"
@@ -19,3 +20,13 @@ class Training(db.Model):
 
     def __repr__(self):
         return f"User('{self.provider}', '{self.title}')"
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    role_title = db.Column(db.Integer, nullable=False)
+    role_level = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Role('{self.role_title}')"
+

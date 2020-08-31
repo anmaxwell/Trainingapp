@@ -14,9 +14,7 @@ bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///site.db'
 db = SQLAlchemy(app)
 
-#test userlist
-userlist = ['ania@ania.com', 'test@test.com']
-
+#test users
 people = {'ania@ania.com': {'role': 'Architect', 'level': 'Mid'},
           'test@test.com': {'role': 'Product Owner', 'level': 'Senior'},
           'aniamaxwell@yahoo.com': {'role': 'Developer', 'level': 'Associate'}}
@@ -24,4 +22,5 @@ people = {'ania@ania.com': {'role': 'Architect', 'level': 'Mid'},
 
 #to prevent getting stuck in circular imports create this last
 from trainer import routes, models
+
 

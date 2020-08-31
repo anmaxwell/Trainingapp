@@ -1,4 +1,4 @@
-from trainer import app, db, userlist, people
+from trainer import app, db, people
 from trainer.models import User, Training
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining
 from flask import render_template, url_for, flash, redirect, request, session
@@ -25,12 +25,12 @@ def login():
                 session['name'] = form.email.data
                 session['role'] = people[session['name']]['role']
                 session['level'] = people[session['name']]['level']
-                flash(f"Login successful for {session['name']}!", 'success')
                 return redirect(url_for('history'))
             else:
                 flash('Email not recognised', 'danger')
         else:
             flash('Login Unsuccessful. Please check email', 'danger')
+
     return render_template('login.html', title='Login', form=form)
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -48,7 +48,7 @@ def signup():
             else:
                 newuser = {session['name']: {'role': session['role'], 'level': session['level']}}
                 people.update(newuser)
-                flash(f"Account created for {session['name']}!", 'success')
+                flash(f"Account created for {session['name']} {session['role']} {session['level']}!", 'success')
                 return redirect(url_for('profile'))
         flash(f"Danger for {session['name']}!", 'danger')
     return render_template('signup.html', title='SignUp', form=form)
