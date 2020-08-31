@@ -1,5 +1,5 @@
 from trainer import app, db, people
-from trainer.models import User, Training, Role
+from trainer.models import User, Training, Role, Level
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining
 from flask import render_template, url_for, flash, redirect, request, session
 
