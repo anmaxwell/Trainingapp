@@ -1,5 +1,5 @@
 from trainer import app, db, people
-from trainer.models import User, Training
+from trainer.models import User, Training, Role
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining
 from flask import render_template, url_for, flash, redirect, request, session
 
@@ -20,9 +20,11 @@ def login():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            if form.email.data in people:
+            users=User.query.all()
+            if form.email.data in users:
                 session['logged_in'] = True
                 session['name'] = form.email.data
+                thisuser = User.query.get(db.session.query(User.id).filter_by(email=form.email.data).first())
                 session['role'] = people[session['name']]['role']
                 session['level'] = people[session['name']]['level']
                 return redirect(url_for('history'))

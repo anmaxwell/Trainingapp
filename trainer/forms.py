@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-from trainer.models import User, Training
+from trainer.models import User, Training, Role
 
 class SignUpForm(FlaskForm):
     email = StringField('Email',
