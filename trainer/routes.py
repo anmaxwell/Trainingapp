@@ -20,16 +20,15 @@ def login():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            users=User.query.all()
-            if form.email.data in users:
+            thisuser=User.query.filter_by(email=form.email.data).first()
+            if thisuser == None:
+                flash('Email not recognised', 'danger')
+            else:
                 session['logged_in'] = True
                 session['name'] = form.email.data
-                thisuser = User.query.get(db.session.query(User.id).filter_by(email=form.email.data).first())
-                session['role'] = people[session['name']]['role']
-                session['level'] = people[session['name']]['level']
+                session['role'] = thisuser.userrole
+                session['level'] = thisuser.userlevel
                 return redirect(url_for('history'))
-            else:
-                flash('Email not recognised', 'danger')
         else:
             flash('Login Unsuccessful. Please check email', 'danger')
 
