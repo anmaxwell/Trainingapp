@@ -24,7 +24,7 @@ class Training(db.Model):
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(30), unique=True, nullable=False)
     user_id = db.relationship('User', backref='userrole', lazy=True)
 
     def __repr__(self):
@@ -32,7 +32,7 @@ class Role(db.Model):
 
 class Level(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    level = db.Column(db.Integer, nullable=False)
+    level = db.Column(db.String(30), unique=True, nullable=False)
     user_id = db.relationship('User', backref='userlevel', lazy=True)
 
     def __repr__(self):

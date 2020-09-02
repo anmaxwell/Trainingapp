@@ -1,4 +1,4 @@
-from trainer import app, db, people
+from trainer import app, db
 from trainer.models import User, Training, Role, Level
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining
 from flask import render_template, url_for, flash, redirect, request, session
@@ -26,8 +26,8 @@ def login():
             else:
                 session['logged_in'] = True
                 session['name'] = form.email.data
-                session['role'] = thisuser.userrole
-                session['level'] = thisuser.userlevel
+                session['role'] = thisuser.userrole.id
+                session['level'] = thisuser.userlevel.id
                 return redirect(url_for('history'))
         else:
             flash('Login Unsuccessful. Please check email', 'danger')
@@ -41,16 +41,20 @@ def signup():
         if form.validate_on_submit():
             session['logged_in'] = True
             session['name'] = form.email.data
-            session['role'] = form.role.data
-            session['level'] = form.level.data
-            if form.email.data in people:
+            thisuser=User.query.filter_by(email=form.email.data).first()
+            if thisuser == None:
+                session['role'] = form.role.data
+                session['level'] = form.level.data
+                newuser = User(email=form.email.data, role=form.role.data, level= form.level.data)
+                db.session.add(newuser)
+                db.session.commit()
+                flash(f"Account created for {session['name']}!", 'success')
+                return redirect(url_for('profile'))
+            else:
+                session['role'] = thisuser.userrole.id
+                session['level'] = thisuser.userlevel.id
                 flash(f"Account already exists for {session['name']}!", 'success')
                 return redirect(url_for('history'))
-            else:
-                newuser = {session['name']: {'role': session['role'], 'level': session['level']}}
-                people.update(newuser)
-                flash(f"Account created for {session['name']} {session['role']} {session['level']}!", 'success')
-                return redirect(url_for('profile'))
         flash(f"Danger for {session['name']}!", 'danger')
     return render_template('signup.html', title='SignUp', form=form)
 
