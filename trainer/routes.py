@@ -70,9 +70,26 @@ def profile():
             return redirect(url_for('login'))
     return render_template('profile.html', title='Profile', form=form, role=session['role'], level=session['level'])
 
-@app.route('/logtraining')
+@app.route('/logtraining', methods=['GET', 'POST'])
 def logtraining():
     form = LogTraining()
+    if request.method == 'GET':
+        if session.get('logged_in') == False:
+            return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        flash(f"Hello1", 'success')
+        if form.validate_on_submit():
+            provider=form.provider.data
+            title=form.title.data
+            date_taken=form.date_taken.data
+            review=form.review.data
+            flash(f"Training created for {provider}!", 'success')
+            return redirect(url_for('login'))
+        else:
+            flash(f"oh dear", 'danger')
+
+
     return render_template('logtraining.html', title='LogTraining', form=form)
 
 @app.route('/logout')
