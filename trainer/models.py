@@ -21,7 +21,7 @@ class Training(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.provider}', '{self.title}')"
+        return f"Training('{self.provider}', '{self.title}')"
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)

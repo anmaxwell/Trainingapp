@@ -73,20 +73,19 @@ def profile():
 @app.route('/logtraining', methods=['GET', 'POST'])
 def logtraining():
     form = LogTraining()
-    if request.method == 'GET':
-        if session.get('logged_in') == False:
-            return redirect(url_for('login'))
-            
+    if session.get('name') == None:
+        return redirect(url_for('login'))
     if request.method == 'POST':
         thisuser=User.query.filter_by(email=session['name']).first()
         if form.validate_on_submit():
             newtrain = Training(provider=form.provider.data, title=form.title.data, date_taken=form.date_taken.data, rating=form.rating.data, review=form.review.data, user_id=thisuser.id)
             db.session.add(newtrain)
             db.session.commit()
-            flash(f"Training created for {provider}!", 'success')
-            return redirect(url_for('login'))
+            flash(f"Training created for {form.provider.data}!", 'success')
+            return redirect(url_for('history'))
         else:
             flash(f"oh dear", 'danger')
+
 
 
     return render_template('logtraining.html', title='LogTraining', form=form)
