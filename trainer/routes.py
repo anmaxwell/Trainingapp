@@ -76,14 +76,13 @@ def logtraining():
     if request.method == 'GET':
         if session.get('logged_in') == False:
             return redirect(url_for('login'))
-
+            
     if request.method == 'POST':
-        flash(f"Hello1", 'success')
+        thisuser=User.query.filter_by(email=session['name']).first()
         if form.validate_on_submit():
-            provider=form.provider.data
-            title=form.title.data
-            date_taken=form.date_taken.data
-            review=form.review.data
+            newtrain = Training(provider=form.provider.data, title=form.title.data, date_taken=form.date_taken.data, rating=form.rating.data, review=form.review.data, user_id=thisuser.id)
+            db.session.add(newtrain)
+            db.session.commit()
             flash(f"Training created for {provider}!", 'success')
             return redirect(url_for('login'))
         else:

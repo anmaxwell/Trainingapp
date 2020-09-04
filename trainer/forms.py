@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, TextAreaField, Bool
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from trainer.models import User, Training, Role, Level
+import datetime
 
 class SignUpForm(FlaskForm):
     email = StringField('Email',
@@ -33,7 +34,7 @@ class LogTraining(FlaskForm):
                            validators=[DataRequired(), Length(max=20)])
     title = StringField('Title',
                            validators=[DataRequired(), Length(min=2, max=120)])
-    date_taken = DateField('Date Entered', format='%Y-%m-%d')
+    date_taken = DateField('Date Taken', format='%Y-%m-%d', default=datetime.date.today)
     rating = SelectField(u'Rating', choices=[(1,"Definitely wouldn't recommend"),(2,"Wouldn't recommend"),(3,"Neutral")
                     ,(4,"Would recommend"),(5,"Definitely would recommend")], coerce=int)
     review = TextAreaField('Review')

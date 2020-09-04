@@ -6,25 +6,70 @@
         {{ form.hidden_tag() }}
         <label class="h3" for="title">Log Training</label>
         
-        <div class="form-group">           
-            <label for="provider">Training Provider</label>
-            <input type="provider" class="form-control" id="provider" aria-describedby="providerHelp">    
-        </div>
-        <div class="form-group">           
-            <label for="coursetitle">Course Title</label>
-            <input type="coursetitle" class="form-control" id="coursetitle" aria-describedby="coursetitleHelp">    
+        <div class="form-group">
+            {{ form.provider.label(class="form-control-label") }}
+            {% if form.provider.errors %}
+                {{ form.provider(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.provider.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.provider(class="form-control") }}
+            {% endif %}
         </div>
         <div class="form-group">
-            <label for="date_taken">Date Taken</label>
-            {{ form.date_taken(class="form-control") }}
+            {{ form.title.label(class="form-control-label") }}
+            {% if form.title.errors %}
+                {{ form.title(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.title.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.title(class="form-control") }}
+            {% endif %}
         </div>
         <div class="form-group">
-            <label for="rating">Rating</label>
-            {{ form.rating(class="form-control") }}
+            {{ form.date_taken.label(class="form-control-label") }}
+            {% if form.date_taken.errors %}
+                {{ form.date_taken(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.date_taken.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.date_taken(class="form-control") }}
+            {% endif %}
         </div>
         <div class="form-group">
-            <label for="FormControlTextarea1">Add Review</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            {{ form.rating.label(class="form-control-label") }}
+            {% if form.rating.errors %}
+                {{ form.rating(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.rating.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.rating(class="form-control") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.review.label(class="form-control-label") }}
+            {% if form.review.errors %}
+                {{ form.review(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.review.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.review(class="form-control") }}
+            {% endif %}
         </div>
 
         <button type="submit" class="btn btn-success">Submit</button>

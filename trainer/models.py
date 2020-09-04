@@ -15,7 +15,8 @@ class Training(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     provider = db.Column(db.String(60), nullable=False)
     title = db.Column(db.String(60), nullable=False)
-    date_taken = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_taken = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    rating = db.Column(db.String(60), nullable=False)
     review = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
