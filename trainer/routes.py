@@ -61,6 +61,8 @@ def signup():
 @app.route('/profile')
 def profile():
     form = Profile()
+    if session.get('name') == None:
+        return redirect(url_for('login'))
     if request.method == 'GET':
         if session.get('logged_in') == True:
             form.username.data = session['name']
