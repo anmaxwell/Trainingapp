@@ -99,3 +99,38 @@ def logout():
     session.pop('name', None)
     session['logged_in'] = False
     return redirect(url_for('index'))
+
+@app.route('/trainedit/<int:train_id>/update', methods=['GET', 'POST'])
+def train_edit(train_id):
+    form = LogTraining()
+    if session.get('name') == None:
+        return redirect(url_for('login'))
+
+    trainedit=Training.query.get(train_id)
+    thisuser=User.query.filter_by(email=session['name']).first()
+
+    if request.method == 'GET':
+        form.provider.data = trainedit.provider
+        form.title.data = trainedit.title
+        form.date_taken.data = trainedit.date_taken
+        form.rating.data = trainedit.rating
+        form.review.data = trainedit.review
+
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            trainedit.provider = form.provider.data 
+            trainedit.title = form.title.data 
+            trainedit.date_taken = form.date_taken.data 
+            trainedit.rating = form.rating.data 
+            trainedit.review = form.review.data
+            
+            db.session.add(trainedit)
+            db.session.commit()
+            flash(f"Training update!", 'success')
+            return redirect(url_for('history'))
+        else:
+            flash(f"oh dear", 'danger')
+
+    return render_template('logtraining.html', title='LogTraining', form=form)
+    

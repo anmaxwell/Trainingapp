@@ -38,7 +38,7 @@
                 
                 <td> {{ record.review }} </td>
                 <td> {{ record.date_taken.strftime('%d-%m-%Y') }} </td>
-                <td> Edit </td>
+                <td> <a href="{{ url_for('train_edit', train_id=record.id) }}" class="btn btn-light" role="edit" >Edit</a> </td>
               </tr>     
             {% endfor %}
           </tbody>
