@@ -91,9 +91,6 @@ def logtraining():
             return redirect(url_for('history'))
         else:
             flash(f"oh dear", 'danger')
-
-
-
     return render_template('logtraining.html', title='LogTraining', form=form)
 
 @app.route('/logout')
