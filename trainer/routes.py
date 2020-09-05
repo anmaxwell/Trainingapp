@@ -62,18 +62,28 @@ def signup():
         flash(f"Danger for {session['name']}!", 'danger')
     return render_template('signup.html', title='SignUp', form=form)
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     form = Profile()
     if session.get('name') == None:
         return redirect(url_for('login'))
+    thisuser=User.query.filter_by(email=session['name']).first()
     if request.method == 'GET':
         if session.get('logged_in') == True:
-            form.username.data = session['name']
-            form.role.data = session['role']
-            form.level.data = session['level']
+            form.username.data = thisuser.email
+            form.role.data = thisuser.role
+            form.level.data = thisuser.level
         else:
             return redirect(url_for('login'))
+    elif request.method == 'POST':
+        flash(f"nearly!", 'danger')
+        if form.validate_on_submit():
+            thisuser.email = form.email.data
+            thisuser.role = form.role.data
+            thisuser.level = form.level.data
+            db.session.add(thisuser)
+            db.session.commit()
+            flash(f"done!", 'danger')
     return render_template('profile.html', title='Profile', form=form, role=session['role'], level=session['level'])
 
 @app.route('/logtraining', methods=['GET', 'POST'])
@@ -105,32 +115,26 @@ def train_edit(train_id):
     form = LogTraining()
     if session.get('name') == None:
         return redirect(url_for('login'))
-
     trainedit=Training.query.get(train_id)
     thisuser=User.query.filter_by(email=session['name']).first()
-
     if request.method == 'GET':
         form.provider.data = trainedit.provider
         form.title.data = trainedit.title
         form.date_taken.data = trainedit.date_taken
         form.rating.data = trainedit.rating
         form.review.data = trainedit.review
-
-
-    if request.method == 'POST':
+    elif request.method == 'POST':
         if form.validate_on_submit():
             trainedit.provider = form.provider.data 
             trainedit.title = form.title.data 
             trainedit.date_taken = form.date_taken.data 
             trainedit.rating = form.rating.data 
             trainedit.review = form.review.data
-            
             db.session.add(trainedit)
             db.session.commit()
             flash(f"Training update!", 'success')
             return redirect(url_for('history'))
         else:
             flash(f"oh dear", 'danger')
-
     return render_template('logtraining.html', title='LogTraining', form=form)
     

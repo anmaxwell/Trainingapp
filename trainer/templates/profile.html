@@ -2,37 +2,52 @@
 {% block content %}
 
 <div class="border border primary w-50 p-3" style="background-color: rgb(211, 240, 220); margin: auto; margin-top: 120px">
-    <form>
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}  
         <label class="h3" for="title">Profile</label>
-        <div class="form-group">           
-            <label for="username">Username</label>   
-            {{ form.username(class="form-control") }}
+
+        <div class="form-group">
+          {{ form.username.label(class="form-control-label") }}
+          {% if form.username.errors %}
+              {{ form.username(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.username.errors %}
+                      <span>{{ error }}</span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.username(class="form-control") }}
+          {% endif %}
         </div>
 
         <div class="form-group">
-            <label for="role">Role</label>
-                <select class="form-control" id="role"> 
-                    <option {% if role == 1 %} selected="selected"{% endif %}>Business Analyst</option>
-                    <option {% if role == 2 %} selected="selected"{% endif %}>Test Engineer</option>
-                    <option {% if role == 3 %} selected="selected"{% endif %}>Developer</option>
-                    <option {% if role == 4 %} selected="selected"{% endif %}>Architect</option>
-                    <option {% if role == 5 %} selected="selected"{% endif %}>Product Owner</option>
-                    <option {% if role == 6 %} selected="selected"{% endif %}>Scrum Master</option>
-                </select>
+          {{ form.role.label(class="form-control-label") }}
+          {% if form.role.errors %}
+              {{ form.role(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.role.errors %}
+                      <span>{{ error }}</span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.role(class="form-control") }}
+          {% endif %}
         </div>
 
         <div class="form-group">
-            <label for="level">Level</label>
-            <select class="form-control" id="level">
-                <option {% if level == 1 %} selected="selected"{% endif %}>Apprentice</option>
-                <option {% if level == 2 %} selected="selected"{% endif %}>Graduate</option>
-                <option {% if level == 3 %} selected="selected"{% endif %}>Associate</option>
-                <option {% if level == 4 %} selected="selected"{% endif %}>Mid</option>
-                <option {% if level == 5 %} selected="selected"{% endif %}>Senior</option>
-                <option {% if level == 6 %} selected="selected"{% endif %}>Principal</option>
-              </select>
+          {{ form.level.label(class="form-control-label") }}
+          {% if form.level.errors %}
+              {{ form.level(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.level.errors %}
+                      <span>{{ error }}</span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.level(class="form-control") }}
+          {% endif %}
         </div>
-
+<!--  
         <label class="h3 pb-2" for="title">Interests</label>
 
         <div class="accordion" id="accordionExample">
@@ -399,6 +414,7 @@
             </div>
 
         </div>
+--> 
 
         <button type="submit" class="btn btn-success mt-3">Submit</button>
 
