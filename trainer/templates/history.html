@@ -2,8 +2,34 @@
 
 {% block content %}
 
-Hello There 
+<div class="border border primary w-50 p-3" style="background-color: rgb(211, 240, 220); margin: auto; margin-top: 60px">
 
-This is the history page
+    <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            {% for record in records %}
+              <tr>
+                <!-- Loop each CV field -->
+                <td> {{ record.provider }} </td>
+                <td> {{ record.title }} </td>
+                <td> {{ record.rating }} </td>
+                <td> {{ record.review }} </td>
+                <td> {{ record.date_taken.strftime('%d-%m-%Y') }} </td>
+              </tr>     
+            {% endfor %}
+          </tbody>
+
+      </table>
+
+</div>
 
 {% endblock content %}

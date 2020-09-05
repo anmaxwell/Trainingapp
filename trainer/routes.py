@@ -13,7 +13,11 @@ def home():
 
 @app.route('/history')
 def history():
-    return render_template('history.html')
+    if session.get('name') == None:
+        return redirect(url_for('login'))
+    thisuser=User.query.filter_by(email=session['name']).first()
+    records=Training.query.filter_by(user_id=thisuser.id)
+    return render_template('history.html', title='History', records=records)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
