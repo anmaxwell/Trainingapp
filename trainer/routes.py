@@ -16,7 +16,7 @@ def history():
     if session.get('name') == None:
         return redirect(url_for('login'))
     thisuser=User.query.filter_by(email=session['name']).first()
-    records=Training.query.filter_by(user_id=thisuser.id)
+    records=Training.query.filter_by(user_id=thisuser.id).order_by(Training.date_taken.desc())
     return render_template('history.html', title='History', records=records)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -67,18 +67,19 @@ def profile():
     form = Profile()
     if session.get('name') == None:
         return redirect(url_for('login'))
-    thisuser=User.query.filter_by(email=session['name']).first()
+    
     if request.method == 'GET':
         if session.get('logged_in') == True:
-            form.username.data = thisuser.email
-            form.role.data = thisuser.role
-            form.level.data = thisuser.level
+            form.username.data = session['name']
+            form.role.data = session['role']
+            form.level.data = session['level']
         else:
             return redirect(url_for('login'))
     elif request.method == 'POST':
         flash(f"nearly!", 'danger')
         if form.validate_on_submit():
-            thisuser.email = form.email.data
+            thisuser=User.query.filter_by(email=session['name']).first()
+            thisuser.email = form.username.data
             thisuser.role = form.role.data
             thisuser.level = form.level.data
             db.session.add(thisuser)

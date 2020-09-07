@@ -2,49 +2,41 @@
 
 {% block content %}
 
-<div class="border border primary" style="background-color: rgb(211, 240, 220); margin: auto; margin-top: 60px; width:1000px ">
+<div style="margin-top: 60px"></div>
 
-    <table class="table table-striped table-bordered">
-        <col style="width:15%">
-        <col style="width:15%">
-        <col style="width:15%">
-        <col style="width:30%">
-        <col style="width:15%">
-        <col style="width:10%">
-        <thead>
-          <tr>
-            <th scope="col">Provider</th>
-            <th scope="col">Title</th>
-            <th scope="col">Rating</th>
-            <th scope="col">Review</th>
-            <th scope="col">Date Taken</th>
-            <th scope="col">Edit</th>
-          </tr>
-        </thead>
 
-        <tbody>
-            {% for record in records %}
-              <tr>
-                <!-- Loop each CV field -->
- 
-                <td> {{ record.provider }} </td>
-                <td> {{ record.title }} </td>
-                <td> {% if record.rating == '1' %} Definitely wouldn't recommend  
-                     {% elif record.rating == '2' %} Wouldn't recommend
-                     {% elif record.rating == '3' %} Neutral
-                     {% elif record.rating == '4' %} Would recommend
-                     {% elif record.rating == '5' %} Definitely would recommend
-                    {% endif %}  </td>
-                
-                <td> {{ record.review }} </td>
-                <td> {{ record.date_taken.strftime('%d-%m-%Y') }} </td>
-                <td> <a href="{{ url_for('train_edit', train_id=record.id) }}" class="btn btn-light" role="edit" >Edit</a> </td>
-              </tr>     
-            {% endfor %}
-          </tbody>
+  {% for record in records %}
 
-      </table>
+    <div class="card border-secondary mx-auto mb-3" style="max-width: 38rem;">
 
-</div>
+      <div class="card-header">
+        <div class="d-flex bd-highlight mb-3">
+          <div class="mr-auto p-2 bd-highlight">{{ record.title }}</div>
+          <div class="p-2 bd-highlight">{{ record.date_taken }}</div>
+        </div>
+      </div>
+
+
+      <div class="card-body text-secondary">
+      <h5 class="card-title">{{ record.provider }}</h5>
+      <p class="card-text">{{ record.review }}</p>
+        <div class="d-flex bd-highlight mb-3">
+          <div class="mr-auto p-2 bd-highlight">
+          {% if record.rating == '1' %} Definitely wouldn't recommend  
+          {% elif record.rating == '2' %} Wouldn't recommend
+          {% elif record.rating == '3' %} Neutral
+          {% elif record.rating == '4' %} Would recommend
+          {% elif record.rating == '5' %} Definitely would recommend
+          {% endif %}
+          </div>
+          <div class="p-2 bd-highlight">
+          <a href="{{ url_for('train_edit', train_id=record.id) }}" class="btn btn-light" role="edit" >Edit</a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+  {% endfor %}
 
 {% endblock content %}
