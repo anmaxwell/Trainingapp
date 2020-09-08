@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="border border primary w-50 p-3" style="background-color: rgb(211, 240, 220); margin: auto; margin-top: 120px">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <label class="h3" for="title">Admin</label>
+
+        <form>
+            <div class="form-row">
+              <div class="col">
+                <label class="my-2 mr-2" for="inlineFormCustomSelectPref">Add Role</label>
+              </div>
+              <div class="col-7">
+                <input type="text" class="form-control my-1" placeholder="Role">
+              </div>
+              <div class="col">
+                <button type="submit" class="btn btn-primary my-1">Submit</button>
+              </div>
+            </div>
+        </form>
+
+        <form>
+            <div class="form-row">
+              <div class="col">
+                <label class="my-2 mr-2" for="inlineFormCustomSelectPref">Add Level</label>
+              </div>
+              <div class="col-7">
+                <input type="text" class="form-control my-1" placeholder="Level">
+              </div>
+              <div class="col">
+                <button type="submit" class="btn btn-primary my-1">Submit</button>
+              </div>
+            </div>
+        </form>
+
+        <form>
+            <div class="form-row">
+              <div class="col">
+                <label class="my-2 mr-2" for="inlineFormCustomSelectPref">Edit Training</label>
+              </div>
+              <div class="col-7">
+                <input type="text" class="form-control my-1" placeholder="Training">
+              </div>
+              <div class="col">
+                <button type="submit" class="btn btn-primary my-1">Edit</button>
+              </div>
+            </div>
+        </form>
+
+    </form>
+</div>
+
+
+{% endblock content %}

@@ -1,6 +1,6 @@
 from trainer import app, db
 from trainer.models import User, Training, Role, Level
-from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining
+from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining, Admin
 from flask import render_template, url_for, flash, redirect, request, session
 
 @app.route('/')
@@ -41,6 +41,8 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignUpForm()
+    form.role.choices = [(role.id, role.title) for role in Role.query.order_by(Role.title).all()]
+    form.level.choices = [(level.id, level.level) for level in Level.query.order_by(Level.level).all()]
     if request.method == 'POST':
         if form.validate_on_submit():
             session['logged_in'] = True
@@ -65,6 +67,8 @@ def signup():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     form = Profile()
+    form.role.choices = [(role.id, role.title) for role in Role.query.order_by(Role.title).all()]
+    form.level.choices = [(level.id, level.level) for level in Level.query.order_by(Level.level).all()]
     if session.get('name') == None:
         return redirect(url_for('login'))
     
@@ -76,7 +80,6 @@ def profile():
         else:
             return redirect(url_for('login'))
     elif request.method == 'POST':
-        flash(f"nearly!", 'danger')
         if form.validate_on_submit():
             thisuser=User.query.filter_by(email=session['name']).first()
             thisuser.email = form.username.data
@@ -84,7 +87,6 @@ def profile():
             thisuser.level = form.level.data
             db.session.add(thisuser)
             db.session.commit()
-            flash(f"done!", 'danger')
     return render_template('profile.html', title='Profile', form=form, role=session['role'], level=session['level'])
 
 @app.route('/logtraining', methods=['GET', 'POST'])
@@ -139,3 +141,11 @@ def train_edit(train_id):
             flash(f"oh dear", 'danger')
     return render_template('logtraining.html', title='LogTraining', form=form)
     
+@app.route('/admin')
+def admin():
+    # admin page to delete items, add roles or levels
+    form = Admin()
+    if session.get('name') == None:
+        return redirect(url_for('login'))
+
+    return render_template('admin.html', title='Admin', form=form)

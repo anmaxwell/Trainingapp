@@ -9,10 +9,8 @@ import datetime
 class SignUpForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email(), Length(min=2, max=120)])
-    role = SelectField(u'Role', choices=[(1,"Business Analyst"),(2,"Test Engineer"),(3,"Developer")
-                    ,(4,"Architect"),(5,"Product Owner"),(6,"Scrum Master")], coerce=int)     
-    level = SelectField(u'Level', choices=[(1,"Apprentice"),(2,"Graduate"),(3,"Associate")
-                    ,(4,"Mid"),(5,"Senior"),(6,"Principal")], coerce=int)     
+    role = SelectField(u'Role', choices=[], coerce=int)     
+    level = SelectField(u'Level', choices=[], coerce=int)     
     submit = SubmitField('Sign Up')
 
 class LoginForm(FlaskForm):
@@ -23,10 +21,8 @@ class LoginForm(FlaskForm):
 class Profile(FlaskForm):
     username = StringField('Username',
                             validators=[DataRequired(), Length(min=2, max=120)])
-    role = SelectField(u'Role', choices=[(1,"Business Analyst"),(2,"Test Engineer"),(3,"Developer")
-                    ,(4,"Architect"),(5,"Product Owner"),(6,"Scrum Master")], coerce=int)
-    level = SelectField(u'Level', choices=[(1,"Apprentice"),(2,"Graduate"),(3,"Associate")
-                    ,(4,"Mid"),(5,"Senior"),(6,"Principal")], coerce=int)
+    role = SelectField(u'Role', choices=[], coerce=int)
+    level = SelectField(u'Level', choices=[], coerce=int)
     submit = SubmitField('Login')
 
 class LogTraining(FlaskForm):
@@ -39,3 +35,11 @@ class LogTraining(FlaskForm):
                     ,(4,"Would recommend"),(5,"Definitely would recommend")], coerce=int)
     review = TextAreaField('Review')
     submit = SubmitField('Login')
+
+class Admin(FlaskForm):
+    role = StringField('Role',
+                            validators=[DataRequired(), Length(min=2, max=60)])
+    level = StringField('Level',
+                            validators=[DataRequired(), Length(min=2, max=60)])
+    training = SelectField(u'Training', choices=[], coerce=int)
+    submit = SubmitField('Submit')
