@@ -141,11 +141,30 @@ def train_edit(train_id):
             flash(f"oh dear", 'danger')
     return render_template('logtraining.html', title='LogTraining', form=form)
     
-@app.route('/admin')
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
     # admin page to delete items, add roles or levels
     form = Admin()
     if session.get('name') == None:
         return redirect(url_for('login'))
+    if session.get('name') != 'aniamaxwell@yahoo.com':
+        flash(f"No Admin Access", 'danger')
+        return redirect(url_for('profile'))
+    
+    if request.method == 'POST':
+        if request.form['submit_button'] == 'AddRole':
+            newrole=Role.query.filter_by(title=form.role.data).first()
+            if newrole == None:
+                db.session.add(newrole)
+                db.session.commit()
+                flash(f"Added Role {form.role.data}", 'success')
+                
+            else:
+                flash(f"{form.role.data} already exists", 'danger')
+
+        elif request.form['submit_button'] == 'AddLevel':
+            flash(f"AddLevel {form.level.data}", 'danger')
+        else:
+            flash(f"Something {form.training.data}", 'danger')
 
     return render_template('admin.html', title='Admin', form=form)

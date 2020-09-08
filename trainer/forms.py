@@ -38,8 +38,8 @@ class LogTraining(FlaskForm):
 
 class Admin(FlaskForm):
     role = StringField('Role',
-                            validators=[DataRequired(), Length(min=2, max=60)])
+                            validators=[Length(min=2, max=30)])
     level = StringField('Level',
-                            validators=[DataRequired(), Length(min=2, max=60)])
+                            validators=[Length(min=2, max=30)])
     training = SelectField(u'Training', choices=[], coerce=int)
     submit = SubmitField('Submit')

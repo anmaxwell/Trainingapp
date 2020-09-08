@@ -13,38 +13,34 @@
                 <label class="my-2 mr-2" for="inlineFormCustomSelectPref">Add Role</label>
               </div>
               <div class="col-7">
-                <input type="text" class="form-control my-1" placeholder="Role">
+                {{ form.role(class="form-control my-1") }}
               </div>
               <div class="col">
-                <button type="submit" class="btn btn-primary my-1">Submit</button>
+                <button type="submit" class="btn btn-primary my-1" name="submit_button" value="AddRole">Submit</button>
               </div>
             </div>
-        </form>
 
-        <form>
             <div class="form-row">
               <div class="col">
                 <label class="my-2 mr-2" for="inlineFormCustomSelectPref">Add Level</label>
               </div>
               <div class="col-7">
-                <input type="text" class="form-control my-1" placeholder="Level">
+                {{ form.level(class="form-control my-1") }}
               </div>
               <div class="col">
-                <button type="submit" class="btn btn-primary my-1">Submit</button>
+                <button type="submit" class="btn btn-primary my-1" name="submit_button" value="AddLevel">Submit</button>
               </div>
             </div>
-        </form>
 
-        <form>
             <div class="form-row">
               <div class="col">
                 <label class="my-2 mr-2" for="inlineFormCustomSelectPref">Edit Training</label>
               </div>
               <div class="col-7">
-                <input type="text" class="form-control my-1" placeholder="Training">
+                {{ form.training(class="form-control my-1") }}
               </div>
               <div class="col">
-                <button type="submit" class="btn btn-primary my-1">Edit</button>
+                <button type="submit" class="btn btn-primary my-1" name="submit_button">Edit</button>
               </div>
             </div>
         </form>
