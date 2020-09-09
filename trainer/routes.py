@@ -32,7 +32,7 @@ def login():
                 session['name'] = form.email.data
                 session['role'] = thisuser.userrole.id
                 session['level'] = thisuser.userlevel.id
-                return redirect(url_for('history'))
+                return redirect(url_for('logtraining'))
         else:
             flash('Login Unsuccessful. Please check email', 'danger')
 
@@ -145,6 +145,7 @@ def train_edit(train_id):
 def admin():
     # admin page to delete items, add roles or levels
     form = Admin()
+    form.training.choices = [(train.id, train.title) for train in Training.query.order_by(Training.date_taken).all()]
     if session.get('name') == None:
         return redirect(url_for('login'))
     if session.get('name') != 'aniamaxwell@yahoo.com':
@@ -153,18 +154,21 @@ def admin():
     
     if request.method == 'POST':
         if request.form['submit_button'] == 'AddRole':
-            newrole=Role.query.filter_by(title=form.role.data).first()
-            if newrole == None:
+            if Role.query.filter_by(title=form.role.data).count() == 0:
+                newrole=Role(title=form.role.data)
                 db.session.add(newrole)
                 db.session.commit()
                 flash(f"Added Role {form.role.data}", 'success')
-                
             else:
                 flash(f"{form.role.data} already exists", 'danger')
 
         elif request.form['submit_button'] == 'AddLevel':
-            flash(f"AddLevel {form.level.data}", 'danger')
-        else:
-            flash(f"Something {form.training.data}", 'danger')
+            if Level.query.filter_by(level=form.level.data).count() == 0:
+                newlevel=Level(level=form.level.data)
+                db.session.add(newlevel)
+                db.session.commit()
+                flash(f"Added Level {form.level.data}", 'success')
+            else:
+                flash(f"{form.level.data} already exists", 'danger')
 
     return render_template('admin.html', title='Admin', form=form)
