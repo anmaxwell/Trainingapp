@@ -171,4 +171,7 @@ def admin():
             else:
                 flash(f"{form.level.data} already exists", 'danger')
 
+        elif request.form['submit_button'] == 'Trainlist':
+            return redirect(url_for('train_edit', train_id=form.training.data))       
+
     return render_template('admin.html', title='Admin', form=form)
