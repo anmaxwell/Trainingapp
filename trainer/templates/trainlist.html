@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+Hello??
+
+<table class="table table-striped" id="cvlist">
+  <thead>
+    <tr>
+      <th scope="col">Reference</th>
+      <th scope="col">Role</th>
+      <th scope="col">Hiring Manager</th>
+      <th scope="col">Status</th>
+      <th scope="col">Date Entered</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for record in records %}
+      <tr>
+        <!-- Loop each CV field -->
+        <td> {{ record.provider}} </td>
+
+      </tr>     
+    {% endfor %}
+  </tbody>
+</table>
+
+  {% endfor %}
+
+{% endblock content %}

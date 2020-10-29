@@ -77,7 +77,7 @@ def profile():
             thisuser=User.query.filter_by(email=session['name']).first()
             form.username.data = session['name']
             form.role.data = thisuser.role
-            form.level.data = session['level']
+            form.level.data = thisuser.level
         else:
             return redirect(url_for('login'))
     elif request.method == 'POST':
@@ -176,3 +176,12 @@ def admin():
             return redirect(url_for('train_edit', train_id=form.training.data))       
 
     return render_template('admin.html', title='Admin', form=form)
+
+
+@app.route('/trainlist')
+def trainlist():
+    if session.get('name') == None:
+        return redirect(url_for('trainlist'))
+    thisuser=User.query.filter_by(email=session['name']).first()
+    records=Training.query.filter_by(user_id=thisuser.id).order_by(Training.date_taken.desc())
+    return render_template('history.html', title='History', records=records)
