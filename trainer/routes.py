@@ -74,8 +74,9 @@ def profile():
     
     if request.method == 'GET':
         if session.get('logged_in') == True:
+            thisuser=User.query.filter_by(email=session['name']).first()
             form.username.data = session['name']
-            form.role.data = session['role']
+            form.role.data = thisuser.role
             form.level.data = session['level']
         else:
             return redirect(url_for('login'))
