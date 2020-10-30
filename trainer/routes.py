@@ -181,7 +181,7 @@ def admin():
 @app.route('/trainlist')
 def trainlist():
     if session.get('name') == None:
-        return redirect(url_for('trainlist'))
+        return redirect(url_for('login'))
     thisuser=User.query.filter_by(email=session['name']).first()
     records=Training.query.filter_by(user_id=thisuser.id).order_by(Training.date_taken.desc())
-    return render_template('history.html', title='History', records=records)
+    return render_template('trainlist.html', title='Training', records=records)
