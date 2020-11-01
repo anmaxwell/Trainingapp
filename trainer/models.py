@@ -7,6 +7,7 @@ class User(db.Model):
     training = db.relationship('Training', backref='usertrain', lazy=True)
     role = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     level = db.Column(db.Integer, db.ForeignKey('level.id'), nullable=False)
+    interests = db.relationship('Interest', secondary = 'link')
 
     def __repr__(self):
         return f"User('{self.email}')"
@@ -29,7 +30,7 @@ class Role(db.Model):
     user_id = db.relationship('User', backref='userrole', lazy=True)
 
     def __repr__(self):
-        return f"Role('{self.id}')"
+        return f"Role('{self.title}')"
 
 class Level(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,3 +40,14 @@ class Level(db.Model):
     def __repr__(self):
         return f"Level('{self.id}')"
 
+class Interest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), unique=True, nullable=False)
+    users = db.relationship('User',secondary='link')
+
+    def __repr__(self):
+        return f"Interest('{self.name}')"
+
+class Link(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)
+    interest_id = db.Column(db.Integer, db.ForeignKey('interest.id'), primary_key = True)

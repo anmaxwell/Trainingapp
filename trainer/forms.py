@@ -23,6 +23,7 @@ class Profile(FlaskForm):
                             validators=[DataRequired(), Length(min=2, max=120)])
     role = SelectField(u'Role', choices=[], coerce=int)
     level = SelectField(u'Level', choices=[], coerce=int)
+    #interests = BooleanField()
     submit = SubmitField('Login')
 
 class LogTraining(FlaskForm):
