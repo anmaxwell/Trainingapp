@@ -1,5 +1,5 @@
 from trainer import app, db
-from trainer.models import User, Training, Role, Level
+from trainer.models import User, Training, Role, Level, Interest
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining, Admin
 from flask import render_template, url_for, flash, redirect, request, session
 
@@ -74,10 +74,13 @@ def profile():
     
     if request.method == 'GET':
         if session.get('logged_in') == True:
+            allinterests=Interest.query.all()
             thisuser=User.query.filter_by(email=session['name']).first()
             form.username.data = session['name']
             form.role.data = thisuser.role
             form.level.data = thisuser.level
+            userinterests=thisuser.interests
+            return render_template('profile.html', title='Profile', form=form, allinterests=allinterests, userinterests=userinterests)
         else:
             return redirect(url_for('login'))
     elif request.method == 'POST':
@@ -88,7 +91,7 @@ def profile():
             thisuser.level = form.level.data
             db.session.add(thisuser)
             db.session.commit()
-    return render_template('profile.html', title='Profile', form=form, role=session['role'], level=session['level'])
+    return render_template('profile.html', title='Profile', form=form)
 
 @app.route('/logtraining', methods=['GET', 'POST'])
 def logtraining():
@@ -171,6 +174,15 @@ def admin():
                 flash(f"Added Level {form.level.data}", 'success')
             else:
                 flash(f"{form.level.data} already exists", 'danger')
+
+        elif request.form['submit_button'] == 'AddInterest':
+            if Interest.query.filter_by(name=form.interest.data).count() == 0:
+                newinterest=Interest(name=form.interest.data)
+                db.session.add(newinterest)
+                db.session.commit()
+                flash(f"Added Interest {form.interest.data}", 'success')
+            else:
+                flash(f"{form.interest.data} already exists", 'danger')
 
         elif request.form['submit_button'] == 'Trainlist':
             return redirect(url_for('train_edit', train_id=form.training.data))       
