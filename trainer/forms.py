@@ -43,6 +43,7 @@ class Admin(FlaskForm):
                             validators=[Length(min=2, max=30)])
     level = StringField('Level',
                             validators=[Length(min=2, max=30)])
+    discipline = SelectField(u'Discipline', choices=[], coerce=int)
     interest = StringField('Interest',
                             validators=[Length(min=2, max=30)])
     training = SelectField(u'Training', choices=[], coerce=int)

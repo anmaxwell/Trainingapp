@@ -177,7 +177,7 @@ def admin():
 
         elif request.form['submit_button'] == 'AddInterest':
             if Interest.query.filter_by(name=form.interest.data).count() == 0:
-                newinterest=Interest(name=form.interest.data)
+                newinterest=Interest(discipline=form.discipline.data, name=form.interest.data)
                 db.session.add(newinterest)
                 db.session.commit()
                 flash(f"Added Interest {form.interest.data}", 'success')

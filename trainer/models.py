@@ -42,6 +42,7 @@ class Level(db.Model):
 
 class Interest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    discipline = db.Column(db.String(30), unique=True, nullable=False)
     name = db.Column(db.String(30), unique=True, nullable=False)
     users = db.relationship('User',secondary='link')
 
