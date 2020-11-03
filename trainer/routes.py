@@ -150,11 +150,12 @@ def admin():
     # admin page to delete items, add roles or levels
     form = Admin()
     form.training.choices = [(train.id, train.title) for train in Training.query.order_by(Training.date_taken).all()]
-    if session.get('name') == None:
-        return redirect(url_for('login'))
-    if session.get('name') != 'aniamaxwell@yahoo.com':
-        flash(f"No Admin Access", 'danger')
-        return redirect(url_for('profile'))
+    form.discipline.choices = [(disc.id, disc.discipline) for disc in Interest.query.all()]
+    #if session.get('name') == None:
+    #    return redirect(url_for('login'))
+    #if session.get('name') != 'aniamaxwell@yahoo.com':
+    #    flash(f"No Admin Access", 'danger')
+    #    return redirect(url_for('profile'))
     
     if request.method == 'POST':
         if request.form['submit_button'] == 'AddRole':
