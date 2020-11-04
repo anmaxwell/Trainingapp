@@ -181,7 +181,7 @@ def admin():
                 newinterest=Interest(discipline=form.discipline.data, name=form.interest.data)
                 db.session.add(newinterest)
                 db.session.commit()
-                flash(f"Added Interest {form.interest.data}", 'success')
+                flash(f"Added Interest {form.discipline.data}, {form.interest.data}", 'success')
             else:
                 flash(f"{form.interest.data} already exists", 'danger')
 
