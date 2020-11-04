@@ -42,12 +42,12 @@ class Level(db.Model):
 
 class Interest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    discipline = db.Column(db.String(30), unique=False, nullable=False)
+    discipline = db.Column(db.String(30), nullable=False)
     name = db.Column(db.String(30), unique=True, nullable=False)
     users = db.relationship('User',secondary='link')
 
     def __repr__(self):
-        return f"Interest('{self.name}')"
+        return f"Interest('{self.discipline}, {self.name}')"
 
 class Link(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)
