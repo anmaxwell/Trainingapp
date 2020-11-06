@@ -1,5 +1,5 @@
 from trainer import app, db
-from trainer.models import User, Training, Role, Level, Interest
+from trainer.models import User, Training, Role, Level, Interest, Discipline
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining, Admin
 from flask import render_template, url_for, flash, redirect, request, session
 
@@ -150,7 +150,7 @@ def admin():
     # admin page to delete items, add roles or levels
     form = Admin()
     form.training.choices = [(train.id, train.title) for train in Training.query.order_by(Training.date_taken).all()]
-    form.discipline.choices = [(disc.id, disc.discipline) for disc in Interest.query.all()]
+    form.discipline.choices = [(disc.id, disc.name) for disc in Discipline.query.order_by(Discipline.id).all()]
     #if session.get('name') == None:
     #    return redirect(url_for('login'))
     #if session.get('name') != 'aniamaxwell@yahoo.com':
@@ -181,7 +181,7 @@ def admin():
                 newinterest=Interest(discipline=form.discipline.data, name=form.interest.data)
                 db.session.add(newinterest)
                 db.session.commit()
-                flash(f"Added Interest {form.interest.data}", 'success')
+                flash(f"Added Interest {form.interest.data} {form.discipline.data}", 'success')
             else:
                 flash(f"{form.interest.data} already exists", 'danger')
 

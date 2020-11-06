@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-from trainer.models import User, Training, Role, Level, Interest
+from trainer.models import User, Training, Role, Level, Interest, Discipline
 import datetime
 
 class SignUpForm(FlaskForm):
@@ -23,7 +23,6 @@ class Profile(FlaskForm):
                             validators=[DataRequired(), Length(min=2, max=120)])
     role = SelectField(u'Role', choices=[], coerce=int)
     level = SelectField(u'Level', choices=[], coerce=int)
-    #interests = BooleanField()
     interests = StringField('Interests')
     submit = SubmitField('Login')
 
