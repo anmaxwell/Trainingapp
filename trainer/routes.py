@@ -101,6 +101,7 @@ def profile():
                 db.session.commit()
             db.session.add(thisuser)
             db.session.commit()
+            return redirect(url_for('profile'))
     return render_template('profile.html', title='Profile', form=form)
 
 @app.route('/logtraining', methods=['GET', 'POST'])
