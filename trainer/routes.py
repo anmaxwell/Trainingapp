@@ -99,7 +99,6 @@ def profile():
                 newint=Link(user_id=thisuser.id, interest_id=thisint)
                 db.session.add(newint)
                 db.session.commit()
-            flash(f"Interest {newinterests}", 'success')
             db.session.add(thisuser)
             db.session.commit()
     return render_template('profile.html', title='Profile', form=form)
