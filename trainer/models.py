@@ -47,7 +47,7 @@ class Interest(db.Model):
     users = db.relationship('User',secondary='link')
 
     def __repr__(self):
-        return f"Interest('{self.discipline}, {self.name}')"
+        return f"Interest('{self.id}, {self.name}, {self.discipline}')"
 
 class Discipline(db.Model):
     id = db.Column(db.Integer, primary_key=True)

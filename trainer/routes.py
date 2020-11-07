@@ -1,5 +1,5 @@
 from trainer import app, db
-from trainer.models import User, Training, Role, Level, Interest, Discipline
+from trainer.models import User, Training, Role, Level, Interest, Discipline, Link
 from trainer.forms import SignUpForm, LoginForm, Profile, LogTraining, Admin
 from flask import render_template, url_for, flash, redirect, request, session
 
@@ -75,12 +75,13 @@ def profile():
     if request.method == 'GET':
         if session.get('logged_in') == True:
             allinterests=Interest.query.all()
+            alldisciplines=Discipline.query.all()
             thisuser=User.query.filter_by(email=session['name']).first()
             form.username.data = session['name']
             form.role.data = thisuser.role
             form.level.data = thisuser.level
             userinterests=thisuser.interests
-            return render_template('profile.html', title='Profile', form=form, allinterests=allinterests, userinterests=userinterests)
+            return render_template('profile.html', title='Profile', form=form, allinterests=allinterests, alldisciplines=alldisciplines, userinterests=userinterests)
         else:
             return redirect(url_for('login'))
     elif request.method == 'POST':
@@ -89,6 +90,16 @@ def profile():
             thisuser.email = form.username.data
             thisuser.role = form.role.data
             thisuser.level = form.level.data
+            oldinterests = Link.query.filter_by(user_id=thisuser.id).all()
+            for thisint in oldinterests:
+                db.session.delete(thisint)
+                db.session.commit()
+            newinterests = request.form.getlist("interests")
+            for thisint in newinterests:
+                newint=Link(user_id=thisuser.id, interest_id=thisint)
+                db.session.add(newint)
+                db.session.commit()
+            flash(f"Interest {newinterests}", 'success')
             db.session.add(thisuser)
             db.session.commit()
     return render_template('profile.html', title='Profile', form=form)
